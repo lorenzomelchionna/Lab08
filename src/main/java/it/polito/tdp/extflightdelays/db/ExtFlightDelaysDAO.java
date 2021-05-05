@@ -107,7 +107,6 @@ public class ExtFlightDelaysDAO {
 				+ "GROUP BY ORIGIN_AIRPORT_ID, DESTINATION_AIRPORT_ID";
 		
 		List<Collegamento> result = new LinkedList<>();
-		List<Collegamento> result2 = new LinkedList<>();
 		
 		try {
 			
@@ -116,17 +115,9 @@ public class ExtFlightDelaysDAO {
 			
 			ResultSet rs = st.executeQuery();
 			
-			while(rs.next()) {
-				
-				result.add(new Collegamento(rs.getInt("OID"), rs.getInt("DID"), rs.getInt("MEDIA")));
-				result2.add(new Collegamento(rs.getInt("OID"), rs.getInt("DID"), rs.getInt("MEDIA")));
-				
-			}
-			
-			for(Collegamento c1 : result)
-				for(Collegamento c2 : result2)
-					if(c1.getA1id() == c2.getA2id() && c2.getA1id() == c1.getA2id()) 
-						result.remove(c2);
+			while(rs.next()) 
+				if(rs.getInt("MEDIA") > minDistanzaMedia)
+					result.add(new Collegamento(rs.getInt("OID"), rs.getInt("DID"), rs.getInt("MEDIA")));
 			
 			conn.close();
 			

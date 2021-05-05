@@ -36,9 +36,28 @@ public class Model {
 		for(Collegamento c : dao.loadCollegamenti(minDistanzaMedia))
 			Graphs.addEdge(this.Grafo, idMap.get(c.a1id), idMap.get(c.getA2id()), c.getMediaDistanza());
 		
-		System.out.println("GRAFO CREATO!");
-		System.out.println("#VERTICI: "+this.Grafo.vertexSet().size());
-		System.out.println("#ARCHI: "+this.Grafo.edgeSet().size());
+		//System.out.println("GRAFO CREATO!");
+		//System.out.println("#VERTICI: "+this.Grafo.vertexSet().size());
+		//System.out.println("#ARCHI: "+this.Grafo.edgeSet().size());
+		
+	}
+	
+	public int getNumeroVertici() {
+		return this.Grafo.vertexSet().size();
+	}
+	
+	public int getNumeroArchi() {
+		return this.Grafo.edgeSet().size();
+	}
+	
+	public String getArchi() {
+		
+		String result = "";
+		
+		for(DefaultWeightedEdge e : this.Grafo.edgeSet())
+			result += this.Grafo.getEdgeSource(e).getAirportName()+"-"+this.Grafo.getEdgeTarget(e).getAirportName()+"-"+this.Grafo.getEdgeWeight(e)+" miles\n";
+		
+		return result;
 		
 	}
 	
